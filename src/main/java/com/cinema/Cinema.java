@@ -72,7 +72,7 @@ public class Cinema {
     }
     public Seat getAvailableSeats(int amount) {
         for (int i = 0; i < seats.length; i++){
-            if (getAvailableSeatsInRow(amount, i) != null){
+            if (getAvailableSeatsInRow(i, amount) != null){
                 return getAvailableSeatsInRow(i, amount);
             }
         }
