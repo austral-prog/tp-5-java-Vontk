@@ -54,9 +54,11 @@ public class Cinema {
      * Busca la primera butaca libre dentro de una fila o null si no encuentra.
      */
     public Seat findFirstAvailableSeatInRow(int row) {
-        for (Seat seat : seats[row]) {
-            if (seat.isAvailable()) {
-                return seat;
+        if (row <= seats.length && row >= 0){
+            for (Seat seat : seats[row]) {
+                if (seat.isAvailable()) {
+                    return seat;
+                }
             }
         }
         return null;
@@ -87,18 +89,20 @@ public class Cinema {
         int consecutiveFreeSeats = 0;
         Seat firstFreeSeat = null;
 
-        for (Seat seat : seats[row]) {
-            if (seat.isAvailable()) { // si encuentra un asiento libre, verifica si es el primero para el return
-                consecutiveFreeSeats++;
-                if (firstFreeSeat == null) {
-                    firstFreeSeat = seat;
+        if (row <= seats.length && row >= 0 && amount <= seats[row].length){ // verifica parametros validos
+            for (Seat seat : seats[row]) {
+                if (seat.isAvailable()) { // si encuentra un asiento libre, verifica si es el primero para el return
+                    consecutiveFreeSeats++;
+                    if (firstFreeSeat == null) {
+                        firstFreeSeat = seat;
+                    }
+                    if (consecutiveFreeSeats == amount) {
+                        return firstFreeSeat;
+                    }
+                } else { // si no encuentra todos los asientos libres necesarios, reinicia las variables
+                    consecutiveFreeSeats = 0;
+                    firstFreeSeat = null;
                 }
-                if (consecutiveFreeSeats == amount) {
-                    return firstFreeSeat;
-                }
-            } else { // si no encuentra todos los asientos libres necesarios, reinicia las variables 
-                consecutiveFreeSeats = 0;
-                firstFreeSeat = null;
             }
         }
         return null; // no se encontró la secuencia
@@ -143,3 +147,4 @@ public class Cinema {
         }
     }
 }
+
